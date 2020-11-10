@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-     <script async defer
+      <meta charset="utf-8">
+      
+      <script 
         src=
         "https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap">
       </script>
-      <script src="map.css">
-      </script>
-    <script src="map.js"></script></head>
+     
+
+    </head>
   <body>
     <div class="container">
       <div class="options-box">
@@ -30,54 +32,48 @@
       </div>
       <div id="map"></div>
     </div>
+      
       <script>
-          
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 15,
-  });
-  infoWindow = new google.maps.InfoWindow();
-  const locationButton = document.createElement("button");
-  locationButton.textContent = "ロケーションを探す";
-  locationButton.classList.add("custom-map-control-button");
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-  locationButton.addEventListener("click", () => {
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          infoWindow.setPosition(pos);
-          infoWindow.setContent("Location found.");
-          infoWindow.open(map);
-          map.setCenter(pos);
-        },
-        () => {
-          handleLocationError(true, infoWindow, map.getCenter());
-        }
-      );
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
-  });
+function getMyPlace() {
+  var output = document.getElementById("result");
+  if (!navigator.geolocation){//Geolocation apiがサポートされていない場合
+    output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
+    return;
+  }
+  function success(position) {
+    var latitude  = position.coords.latitude;//緯度
+    var longitude = position.coords.longitude;//経度
+    output.innerHTML = '<p>緯度 ' + latitude + '° <br>経度 ' + longitude + '°</p>';
+    // 位置情報
+    var latlng = new google.maps.LatLng( latitude , longitude ) ;
+    // Google Mapsに書き出し
+    var map = new google.maps.Map( document.getElementById( 'map' ) , {
+        zoom: 15 ,// ズーム値
+        center: latlng ,// 中心座標
+    } ) ;
+    // マーカーの新規出力
+    new google.maps.Marker( {
+        map: map ,
+        position: latlng ,
+    } ) ;
+  };
+  function error() {
+    //エラーの場合
+    output.innerHTML = "座標位置を取得できません";
+  };
+  navigator.geolocation.getCurrentPosition(success, error);//成功と失敗を判断
 }
+</script>     
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(
-    browserHasGeolocation
-      ? "Error:ジオロケーションの検索に失敗しました。"
-      : "Error:このブラウザはジオロケーションに対応していません。"
-  );
-  infoWindow.open(map);
-}
-      </script>
+      
+      <p>
+      <button onclock="getMyPlace()">現在地を取得</button></p>
+      <div id="result"></div>
+      <div id="map" style="width:100%;height: 600px;"></div>
+      
+     
+     
+      
       <script>
       var map;
       
@@ -153,14 +149,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         
         
         
-        var locations = [
-          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
-        ];
+        
         var largeInfowindow = new google.maps.InfoWindow();
         
         var drawingManager = new google.maps.drawing.DrawingManager({
