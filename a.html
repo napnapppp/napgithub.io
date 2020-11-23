@@ -1,104 +1,100 @@
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see the error "The Geolocation service
+// failed.", it means you probably did not give permission for the browser to
+// locate you.
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Geolocation</title>
+    <head>
+        
+     <title>Geolocation</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap&libraries=&v=weekly"
       defer
     ></script>
-    <style type="text/css">
-		
-     
-      #map {
-        height: 70%;
-      }
-
-		{bottom: 0px;
-		height: 100%;
-		left: 360px;
-		position: absolute;
-		right: 0px;
-		}
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      .custom-map-control-button {
-        appearance: button;
-        background-color: #fff;
-        border: 0;
-        border-radius: 2px;
-        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        margin: 10px;
-        padding: 0 0.5em;
-        height: 40px;
-        font: 400 18px Roboto, Arial, sans-serif;
-        overflow: hidden;
-      }
-      .custom-map-control-button:hover {
-        background: #ebebeb;
-      }
-    </style>
     <script>
-      
-      let map, infoWindow;
+        let map, infoWindow;
 
-      function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 35.4122, lng: 139.4130 },
-          zoom: 16,
-            styles:styles;
-            mapTypeControl:false
-        });
-        infoWindow = new google.maps.InfoWindow();
-        const locationButton = document.createElement("button");
-        locationButton.textContent = "現在地を探す";
-        locationButton.classList.add("custom-map-control-button");
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-          locationButton
-        );
-        locationButton.addEventListener("click", () => {
-          // Try HTML5 geolocation.
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                const pos = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude,
-                };
-                infoWindow.setPosition(pos);
-                infoWindow.setContent("Location found.");
-                infoWindow.open(map);
-                map.setCenter(pos);
-              },
-              () => {
-                handleLocationError(true, infoWindow, map.getCenter());
-              }
-            );
-          } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-          }
-        });
-      }
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 35.41222, lng: 139.41301},
+    zoom: 16,
+  });
+  infoWindow = new google.maps.InfoWindow();
+  const locationButton = document.createElement("button");
+  locationButton.textContent = "現在地の取得";
+  locationButton.classList.add("custom-map-control-button");
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+  locationButton.addEventListener("click", () => {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          infoWindow.setPosition(pos);
+          infoWindow.setContent("Location found.");
+          infoWindow.open(map);
+          map.setCenter(pos);
+        },
+        () => {
+          handleLocationError(true, infoWindow, map.getCenter());
+        }
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  });
+}
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(
-          browserHasGeolocation
-            ? "Error: The Geolocation service failed."
-            : "Error: Your browser doesn't support geolocation."
-        );
-        infoWindow.open(map);
-      }
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: 現在地の取得に失敗しました"
+      : "Error: このブラウザはジオロケーションに対応していません"
+  );
+  infoWindow.open(map);
+}
     </script>
-	  <div id="map"></div>
-      <div class="container">
+        <style type="text/css">
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  height: 70%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-map-control-button {
+  appearance: button;
+  background-color: #fff;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  margin: 10px;
+  padding: 0 0.5em;
+  height: 40px;
+  font: 400 18px Roboto, Arial, sans-serif;
+  overflow: hidden;
+}
+.custom-map-control-button:hover {
+  background: #ebebeb;
+}
+        </style>
+    </head>
+    <body>
+     <div class="container">
       <div class="options-box">
         <h1>地域包括ケアシステムマップ</h1>
         <div>
@@ -118,50 +114,8 @@
           </div>
            </div>
       </div>
-       
-  </head>
-  <body>
-	  
       <script>
-		  
-      marker.addListener('click',function(){
-          populateInfoWindow(this,largeInfowindow);
-      });
-		  marker.addListener(mouseover,function(){
-			  this.setIcon(highlightedIcon);
-		  });
-		  marker.addListener('mouseout',function(){
-			  this.setIcon(defaultIcon);
-		  });
-		  
-		  document.getElementById('show-listing').addEventListener('click',showListings);
-		  document.getElementById('hide-listing').addEventListener('click',hideListings);
-		  
-		  function populateInfoWindow(marker,infowindow){
-			  marker
-			  if (infowindow.marker !=marker){
-				  infowindow.setContent('');
-				  infowindow.marker=marker;
-				  infowindow.addListener('closeclick',function(){
-					  infowindow.marker=null;
-				  });
-				  var streetViewService=new google.maps.StreetViewService();
-				  var radius=50;
-				  
-		  function getStreetView(date,status){
-			  if (status==google.maps.StreetViewStatues.OK){
-				  var nearStreetViewLocation=date.location.latLng;
-				  var heading=google.maps.geometry.spherical.computeHeading(
-				  nearStreetViewLocation,marker,position
-				  );
-				  infowindow.setContent('<div>'+marker.title+'</div><div id="pano"></div>');
-				  
-			  }
-		  }
-				  
-			  }
-		  }
-      </script>
-      
-  </body>
+
+     
+    </body>
 </html>
