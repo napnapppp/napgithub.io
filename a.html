@@ -8,13 +8,18 @@
       defer
     ></script>
     <style type="text/css">
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
+		
+     
       #map {
         height: 70%;
       }
 
-      /* Optional: Makes the sample page fill the window. */
+		{bottom: 0px;
+		height: 100%;
+		left: 360px;
+		position: absolute;
+		right: 0px;
+		}
       html,
       body {
         height: 100%;
@@ -86,15 +91,13 @@
         infoWindow.setPosition(pos);
         infoWindow.setContent(
           browserHasGeolocation
-            ? "Error: 現在地の取得に失敗しました"
-            : "Error: このブラウザはジオロケーションに対応していません"
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
         );
         infoWindow.open(map);
       }
     </script>
-       
-  </head>
-  <body>
+	  <div id="map"></div>
       <div class="container">
       <div class="options-box">
         <h1>地域包括ケアシステムマップ</h1>
@@ -115,11 +118,49 @@
           </div>
            </div>
       </div>
+       
+  </head>
+  <body>
+	  
       <script>
-      marker.addEventListener('click',function(){
+		  
+      marker.addListener('click',function(){
           populateInfoWindow(this,largeInfowindow);
       });
-	      var locations=
+		  marker.addListener(mouseover,function(){
+			  this.setIcon(highlightedIcon);
+		  });
+		  marker.addListener('mouseout',function(){
+			  this.setIcon(defaultIcon);
+		  });
+		  
+		  document.getElementById('show-listing').addEventListener('click',showListings);
+		  document.getElementById('hide-listing').addEventListener('click',hideListings);
+		  
+		  function populateInfoWindow(marker,infowindow){
+			  marker
+			  if (infowindow.marker !=marker){
+				  infowindow.setContent('');
+				  infowindow.marker=marker;
+				  infowindow.addListener('closeclick',function(){
+					  infowindow.marker=null;
+				  });
+				  var streetViewService=new google.maps.StreetViewService();
+				  var radius=50;
+				  
+		  function getStreetView(date,status){
+			  if (status==google.maps.StreetViewStatues.OK){
+				  var nearStreetViewLocation=date.location.latLng;
+				  var heading=google.maps.geometry.spherical.computeHeading(
+				  nearStreetViewLocation,marker,position
+				  );
+				  infowindow.setContent('<div>'+marker.title+'</div><div id="pano"></div>');
+				  
+			  }
+		  }
+				  
+			  }
+		  }
       </script>
       
   </body>
