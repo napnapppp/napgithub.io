@@ -100,7 +100,7 @@
         });
         infoWindow = new google.maps.InfoWindow();
         const locationButton = document.createElement("button");
-        locationButton.textContent = "Pan to Current Location";
+        locationButton.textContent = "現在地を探す";
         locationButton.classList.add("custom-map-control-button");
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(
           locationButton
@@ -134,8 +134,8 @@
         infoWindow.setPosition(pos);
         infoWindow.setContent(
           browserHasGeolocation
-            ? "Error: The Geolocation service failed."
-            : "Error: Your browser doesn't support geolocation."
+            ? "Error: 現在地の取得に失敗しました"
+            : "Error: このブラウザはジオロケーションに対応していません"
         );
         infoWindow.open(map);
       }
@@ -165,6 +165,35 @@
            </div>
       </div>
       <div id="map"></div>
+	  
+	  <script>
+	  var map;
+		  var marker=[];
+		  
+		function initialize(){
+			var m_latlng1=new google.maps.LatLng(35.9333,139.4344);
+			marker1=new google.maps.Marker({
+				position:m_latlng1
+			});
+			
+			var m_latlng2=new google.maps.LatLng(35.9374,139.4333);
+			marker2=new google.maps.Marker({
+				position:m_latlng2
+			});
+			
+			
+		}
+		  
+		  function doOpen(){
+			  marker1.setMap(map);
+			  marker2.setMap(map);
+		  }
+		  
+		  function doClose(){
+			  marker1.setMap(null);
+			  marker2.setMap(null);
+		  }
+	  </script>
     
       
   </body>
