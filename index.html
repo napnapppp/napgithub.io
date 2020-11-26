@@ -169,29 +169,32 @@
 	  <script>
 	  var map;
 		  var marker=[];
-		  
-		function initialize(){
-			var m_latlng1=new google.maps.LatLng(35.9333,139.4344);
-			marker1=new google.maps.Marker({
-				position:m_latlng1
+		function initMap(){
+			
+			map.addEventListener("click",(event)=>{
+				addMarker(event.latlng);
 			});
 			
-			var m_latlng2=new google.maps.LatLng(35.9374,139.4333);
-			marker2=new google.maps.Marker({
-				position:m_latlng2
-			});
-			
-			
-		}
+			}
 		  
-		  function doOpen(){
-			  marker1.setMap(map);
-			  marker2.setMap(map);
+		  function addMarker(location){
+			  const marker=new google.maps.Marker({
+				  position:location,
+				  map:map;
+			  });
+			  
 		  }
 		  
-		  function doClose(){
-			  marker1.setMap(null);
-			  marker2.setMap(null);
+		  function setMapOnAll(map){
+			  for(let i=0;i<markers.length;i++
+			  ){
+				  markers[i].setMapOnAll(null);
+			  }
+			  function showMarkers(){
+				  setMapOnAll(map);
+				  
+			  }
+			 
 		  }
 	  </script>
     
