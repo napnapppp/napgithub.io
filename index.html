@@ -167,14 +167,15 @@
       <div id="map"></div>
 	  
 	  <script>
-	  var map;
-		  var marker=[];
+	
+	let markers=[];
 		function initMap(){
 			
-			map.addEventListener("click",(event)=>{
-				addMarker(event.latlng);
+
+			map.addListener("click",(event)=>{
+				addMarker(event.latLng);
 			});
-			
+			addMarker('map');
 			}
 		  
 		  function addMarker(location){
@@ -182,19 +183,22 @@
 				  position:location,
 				  map:map;
 			  });
-			  
+			  markers.push(marker);
 		  }
 		  
 		  function setMapOnAll(map){
 			  for(let i=0;i<markers.length;i++
 			  ){
-				  markers[i].setMapOnAll(null);
+				  markers[i].setMap(map);
 			  }
 			  function showMarkers(){
 				  setMapOnAll(map);
 				  
 			  }
 			 
+		  }
+		  function clearMarkers(){
+			  setMapOnAll(map);
 		  }
 	  </script>
     
