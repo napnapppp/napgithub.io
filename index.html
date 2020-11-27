@@ -167,7 +167,16 @@
       <div id="map"></div>
 	  
 	  <script>
-	
+		  
+			 function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -34.397, lng: 150.644 },
+          zoom: 18,
+        });
+				  
+			  
+			
+		  	
 	var map;
 	var marker=[];
 		  var infoWindow=[];
@@ -193,7 +202,7 @@
   
      markerEvent(i); // マーカーにクリックイベントを追加
  }
-}
+			 
   
 // マーカーにクリックイベントを追加
 function markerEvent(i) {
@@ -201,6 +210,7 @@ function markerEvent(i) {
       infoWindow[i].open(map, marker[i]); // 吹き出しの表示
   });
 }
+			 }
 		  
 	  </script>
     
