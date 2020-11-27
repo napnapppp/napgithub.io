@@ -174,19 +174,18 @@
 	var marker=[];
 		  var infoWindow=[];
 		 function initMap(){
-			 var listings=[
+			 var location=[
 				 {
 					 name:'川口市元郷2丁目１５',
 				  lat:35.796470,
 				  lng:139.730216,
 				 }
-			 ]
+			 ];
+			 var largeInfowindow=new google.maps.InfoWindow();
+			 var defaultIcon=makeMarkerIcon('0091ff');
+			 var highlightedIcon=makeMakerIcon('FFFF24');
 			 
-		 }
-	
-			  
-		  
-		 for (var i = 0; i < markerData.length; i++) {
+			  for (var i = 0; i < markerData.length; i++) {
         var position=locations[i].location Array.
 		var title=locations[i].title;
 			 
@@ -214,6 +213,11 @@
 			 document.getElementById('hide-listings').addEventListener('click',hideListings);
 		 }
         
+		  
+		 }
+	
+			  
+		
 		  
 	  </script>
     
