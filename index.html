@@ -140,54 +140,7 @@
         infoWindow.open(map);
       }
       
-    </script>
-      
-  </head>
-  <body>
-     <div class="container">
-      <div class="options-box">
-        <h1>地域包括ケアシステムマップ</h1>
-        <div>
-			<span>
-			地域安全マップ</span>
-			<h1>
-			</h1>
-          <input id="show-listings" type="button" value="ピンをオンにする" >
-          <input id="hide-listings" type="button" value="ピンを隠す" >
-			<span>
-			医療、介護マップ</span>
-			<h1><input id="show-listings" type="button" value="ピンをオンにする" >
-          <input id="hide-listings" type="button" value="ピンを隠す" >
-				
-			</h1>
-           
-          </div>
-           </div>
-      </div>
-      <div id="map"></div>
-	  
-	  <script>
-		  
-		  let map;
-let markers = [];
-
-function initMap() {
-  const haightAshbury = { lat:35.796470,lng:139.730216, };
-	
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 18,
-    center: { lat: -34.397, lng: 150.644 },
-    mapTypeId: "terrain",
-  });
-  // This event listener will call addMarker() when the map is clicked.
-  map.addListener("click", (event) => {
-    addMarker(event.latLng);
-  });
-  // Adds a marker at the center of the map.
-  addMarker(haightAshbury);
-}
-
-// Adds a marker to the map and push to the array.
+		 	  
 function addMarker(location) {
   const marker = new google.maps.Marker({
     position: location,
@@ -212,21 +165,41 @@ function clearMarkers() {
 function showMarkers() {
   setMapOnAll(map);
 }
-
-// Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-  clearMarkers();
-  markers = [];
-}
-
-      
-		  	
+  	
 	
 			  
 		
 		  
 	  </script>
     
+	  
+  </head>
+  <body>
+     <div class="container">
+      <div class="options-box">
+        <h1>地域包括ケアシステムマップ</h1>
+        <div>
+			<span>
+			地域安全マップ</span>
+			<h1>
+			</h1>
+          <input id="show-listings" type="button" value="ピンをオンにする" >
+          <input id="hide-listings" type="button" value="ピンを隠す" >
+			<span>
+			医療、介護マップ</span>
+			<h1>
+			</h1>
+			
+			<input id="show-listings" type="button" value="ピンをオンにする" >
+          <input id="hide-listings" type="button" value="ピンを隠す" >
+				
+		
+           
+          </div>
+           </div>
+      </div>
+      <div id="map"></div>
+	  
       
   </body>
 </html>
