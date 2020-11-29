@@ -13,7 +13,7 @@
           right: 0px;
       }
 
-      /* Optional: Makes the sample page fill the window. */
+      
       html,
       body {
         font-family: Arial,sans-serif;
@@ -92,6 +92,11 @@
 	  <script>
       
       let map, infoWindow;
+		  var map;
+		  function initialize(){
+			  var myLatlng1=new google.maps.LatLng(35.796272,139.728743);
+			  
+		  
 
       function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -99,7 +104,7 @@
           zoom: 18,
         });
 		  
-		 
+	  }
         infoWindow = new google.maps.InfoWindow();
         const locationButton = document.createElement("button");
         locationButton.textContent = "現在地を探す";
@@ -126,7 +131,7 @@
               }
             );
           } else {
-            // Browser doesn't support Geolocation
+            
             handleLocationError(false, infoWindow, map.getCenter());
           }
         });
