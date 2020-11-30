@@ -147,9 +147,116 @@
         infoWindow.open(map);
       }
       
+          
+           var markers=[];
+          function initMap(){
+              var locations=[
+                  {
+                      title:'東洋大学　川越キャンパス',location:{lat:35.934479,lng:139.431725}
+                  },
+                  {
+                      title:'駐車場',location:{35.936137,lng:139.425688
+                      }
+                        
+                  }
+              ];
+              var largeinfowindow=new google.maps,InfoWindow();
+              var defaultIcon=makeMaekerIcon('0091ff');
+              var highligthIcon=makeMarkerIcon)('FFFF24');
+              
+              for(var i=0;i<locations.length;i++){
+                  var position=locations[i].location;
+                  var title=locations[i].title;
+                  var marker=new google.maps.Marker({
+                      position:position,
+                      title:title,
+                      animation:google.maps.Animation.DROP,
+                      icon:defaultIcon,
+                      id:i
+                  });
+                  
+                  marker.addLisner('click',function(){
+                      populateInfoWindow(this,largeinfowindow);
+                      
+                  });
+                  
+                  marker.addLisner('mouseover',function(){
+                      this.setIcon(highligthIcon);
+                  });
+                  marker.addLisner('mouseout',function(){
+                      this.setIcon(defaultIcon);
+                  });
+              }
+              document.getElementById('show-listings').addEventListener('click',showListings);
+              document.getElementById('hide-listings').addEventListener('click',hideListings);
+              
+              function populateInfoWindow(marker,infowindow){
+                  if(infowindow.marker !=marker){
+                      infowindow.setContent('');
+                      infowindow.marker=marker;
+                      
+                      infowindow.addEventListener('closeclick',function(){
+                          infowindow.marker=null;
+                      });
+                      var streetViewService=new google.maps.StreetViewService();
+                      var radius=50;
+                      
+                      function getStreetview(date,status){
+                          if (status==google.maps.StreetViewStatus.OK){
+                              var nearStreetViewlocation=data.location.latLng;
+                              var heading=gogle.maps.geometry.spherical.computeHeading(
+                              nearStreetViewlocation,marker,position);
+                              infowindow.setCotent('<div>'+marker.title+'</div><div id="pano"></div>');
+                              var panoramaOptions={
+                                  position:nearStreetViewlocation,
+                                  pov:{
+                                      heading:heading,
+                                      pitch:30
+                                  }
+                              };
+                              var panorama=new google.maps.StreetViewPanorama(
+                              document.getElementById('pano'),panoramaOptions);
+                              
+                      }else{
+                          infowindow.setContent('<div>'+marker.title+'</div>'+'<div>No Street View Found</div>');
+                      }
+                  }
+                      streetViewService.getPanoramaByLocation(marker.position,radius,getStreetview);
+                      infowindow.open(map,marker);
+                      
+              }
+            
+          }
+              function showListing(){
+                  var bounds=new google.maps.LatLngBounds();
+                  
+                  for(var i=0;i<markers.length;i++){
+                      markers[i].setMap(map);
+                      bounds.extend(markers[i].position);
+                      
+                  }
+                  map.fitBoundes(bounds);
+              }
+              function hideListings(){
+                  for(var i=0;i<markers.length;i++){
+                      markers[i].setMap;(null);
+                  }
+              }
+              function makeMarkerIcon(markerColor){
+                  var markerimage=new google.maps.MarkerImage(
+                  'http://chart.googleapis.com/chart/chst=d_map_spin&chld=1.15|0|'+markerColor+
+                  '|40|_|%E2%80%A2',
+                  new google.maps.Size(21,34),
+                  new gooogle.maps.point(0,0),
+                  new google.maps.Point(10,34),
+                  new google.maps.Size(21,34));
+                  return marker Image;
+              }
 		 	  
 		  
 	  </script>
+    
+        
     
 	  
   </head>
