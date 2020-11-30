@@ -89,6 +89,7 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap&libraries=&v=weekly"
       defer
 			></script>
+      
 	  <script>
       
       let map, infoWindow;
@@ -101,7 +102,7 @@
           zoom: 18,
         });
 		  
-	  }
+	  
         infoWindow = new google.maps.InfoWindow();
         const locationButton = document.createElement("button");
         locationButton.textContent = "現在地を探す";
@@ -119,7 +120,7 @@
                   lng: position.coords.longitude,
                 };
                 infoWindow.setPosition(pos);
-                infoWindow.setContent("Location found.");
+                infoWindow.setContent("現在地");
                 infoWindow.open(map);
                 map.setCenter(pos);
               },
