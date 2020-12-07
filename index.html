@@ -177,9 +177,10 @@
                       id:i
                   });
                   
-                  marker.addLisner('click',function(){populateInfoWindow(largeinfowindow)});
+                  marker.addListner('click',function(){
+                    this.populateInfoWindow(largeinfowindow)});
                   
-                  marker.addLisner('mouseover',function(){
+                  marker.addListner('mouseover',function(){
                       this.setIcon(highligthIcon);
                   });
                   marker.addListner('mouseout',function(){
