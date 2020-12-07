@@ -177,13 +177,13 @@
                       id:i
                   });
                   
-                  marker.addListner('click',function(){
+                  marker.addEventListener('click',function(){
                     this.populateInfoWindow(largeinfowindow)});
                   
-                  marker.addListner('mouseover',function(){
+                  marker.addEventListener('mouseover',function(){
                       this.setIcon(highligthIcon);
                   });
-                  marker.addListner('mouseout',function(){
+                  marker.addEventListener('mouseout',function(){
                       this.setIcon(defaultIcon);
                   });
               }
