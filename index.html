@@ -148,118 +148,206 @@
 	  </script>
     
         
-      <script>
-                   
-           var markers=[];
-          function initMap(){
-			  var locations=[
-                  {
-                      title:'東洋大学　川越キャンパス',location:{lat:35.934479,lng:139.431725}
-                  },
-                  {
-                      title:'駐車場',location:{lat:35.936137,lng:139.425688
-                      }
-                        
-                  }
-              ];
-              var largeinfowindow=new google.maps.InfoWindow;
-              var defaultIcon=makeMarkerIcon('0091ff');
-              var highligthIcon=makeMarkerIcon('FFFF24');
-              
-              for(var i=0;i<locations.length;i++){
-                  var position=locations[i].location;
-                  var title=locations[i].title;
-                  var marker=new google.maps.Marker({
-                      position:position,
-                      title:title,
-                      animation:google.maps.Animation.DROP,
-                      icon:defaultIcon,
-                      id:i
-                  });
-                  
-                  marker.addEventListener('click',function(){
-                    this.populateInfoWindow(largeinfowindow)});
-                  
-                  marker.addEventListener('mouseover',function(){
-                      this.setIcon(highligthIcon);
-                  });
-                  marker.addEventListener('mouseout',function(){
-                      this.setIcon(defaultIcon);
-                  });
-              }
-              document.getElementById('show-listings').addEventListener('click',showListings);
-              document.getElementById('hide-listings').addEventListener('click',hideListings);
-			  
-		  }
-             
-		  
-		  
-              
-              function populateInfoWindow(marker,infowindow){
-                  if(infowindow.marker !=marker){
-                      infowindow.setContent('');
-                      infowindow.marker=marker;
-                      
-                      infowindow.addEventListener('closeclick',function(){
-                          infowindow.marker=null;
-                      });
-                      var streetViewService=new google.maps.StreetViewService();
-                      var radius=50;
-                      
-                      function getStreetview(date,status){
-                          if (status==google.maps.StreetViewStatus.OK){
-                              var nearStreetViewlocation=data.location.latLng;
-                              var heading=gogle.maps.geometry.spherical.computeHeading(
-                              nearStreetViewlocation,marker,position);
-                              infowindow.setCotent('<div>'+marker.title+'</div><div id="pano"></div>');
-                              var panoramaOptions={
-                                  position:nearStreetViewlocation,
-                                  pov:{
-                                      heading:heading,
-                                      pitch:30
-                                  }
-                              };
-                              var panorama=new google.maps.StreetViewPanorama(
-                              document.getElementById('pano'),panoramaOptions);
-                              
-                      }else{
-                          infowindow.setContent('<div>'+marker.title+'</div>'+'<div>No Street View Found</div>');
-                      }
-                  }
-                      streetViewService.getPanoramaByLocation(marker.position,radius,getStreetview);
-                      infowindow.open(map,marker);
-                      
-              }
-            
+     <script>
+      let marker = [];
+      let infoWindow = [];
+      let markerData = [];
+
+      // 地図初期表示
+      
+
+        //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
+        const request = new XMLHttpRequest();
+        const bookid = 'https://docs.google.com/spreadsheets/d/1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE/edit#gid=0';
+        const sheetname = '地域包括ケアシステム';
+        const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
+        const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
+
+        request.open('GET', url, true);
+        request.responseType = 'json';
+
+        request.onload = function () {
+          const data = this.response;     // 取得できた値を格納
+          markerData = parseData(data);   // Function:データ変換
+          setData(markerData);            // Function:位置とマーカーをセット
+        };
+
+        request.send();
+
+		 
+      }
+
+      // Function:データ変換
+      function parseData(data) {
+        const keys = data.values[0];
+        const parsemarkerData = [];
+        data.values.forEach(function(value, i) {
+          if (i > 0) {
+            const hash = {};
+            value.forEach(function(d, j) {
+              hash[keys[j]] = d;
+            });
+            parsemarkerData.push(hash);
           }
-              function showListing(){
-                  var bounds=new google.maps.LatLngBounds();
-                  
-                  for(var i=0;i<markers.length;i++){
-                      markers[i].setMap(map);
-                      bounds.extend(markers[i].position);
-                      
-                  }
-                  map.fitBoundes(bounds);
-              }
-              function hideListings(){
-                  for(var i=0;i<markers.length;i++){
-                      markers[i].setMap;(null);
-                  }
-              }
-              function makeMarkerIcon(markerColor){
-                  var markerimage=new google.maps.MarkerImage(
-                  'http://chart.googleapis.com/chart/chst=d_map_spin&chld=1.15|0|'+markerColor+
-                  '|40|_|%E2%80%A2',
-                  new google.maps.Size(21,34),
-                  new google.maps.Point(0,0),
-                  new google.maps.Point(10,34),
-                  new google.maps.Size(21,34));
-                  
-              }
-		 	  
-		  
-            </script>
+        });
+        return parsemarkerData;
+      }
+
+      // Function:位置とマーカーをセット
+      function setData(markerData){
+
+        // 初期化
+        let sidebar_html = "";
+        marker = [];
+
+        for (let i = 0; i < markerData.length; i++) {
+
+          // マーカー位置のセット
+          const markerLatLng = new google.maps.LatLng({
+            lat: Number(markerData[i]['lat']),
+            lng: Number(markerData[i]['lng'])
+          });
+
+          // マーカーアイコンのセット
+          const tagno = markerData[i]['tag'].charAt(0)
+          switch (tagno) {
+            case '1':
+              iconcolor = './icon_tag/tag1.png'
+              break;
+            case '2':
+              iconcolor = './icon_tag/tag2.png'
+              break;
+            case '3':
+              iconcolor = './icon_tag/tag3.png'
+              break;
+            case '4':
+              iconcolor = './icon_tag/tag4.png'
+              break;
+            case '5':
+              iconcolor = './icon_tag/tag5.png'
+              break;
+            case '6':
+              iconcolor = './icon_tag/tag6.png'
+              break;
+            case '7':
+              iconcolor = './icon_tag/tag7.png'
+              break;
+            default:
+              iconcolor = './icon_tag/tag7.png'
+          }
+          const icon = new google.maps.MarkerImage(iconcolor);
+
+          // マーカーのセット
+          marker[i] = new google.maps.Marker({
+            position: markerLatLng,          // マーカーを立てる位置を指定
+            map: map,                        // マーカーを立てる地図を指定
+            icon: icon                       // アイコン指定
+          });
+
+          // 吹き出しへのデータセット
+          const done = markerData[i]['done'];
+          const tag = markerData[i]['tag'];
+          const name = markerData[i]['name'];
+          const img = markerData[i]['img'];
+
+          let setHtml;
+          if (done === 'y'){
+            setHtml = tag + '<br><br>' + name + '<br><img src=' + img + ' width="200" height="150"><br>';
+          } else {
+            setHtml = tag + '<br><br>' + name + '<br><br>';
+          }
+
+          // 吹き出しのセット
+          infoWindow[i] = new google.maps.InfoWindow({
+            content: setHtml
+          });
+
+          // サイドバーのデータセット
+          sidebar_html += '<a href="javascript:myclick(' + i + ')">' + tag + ' : ' + name + '(' + done + ')' + '</a><br>';
+
+          // Function:マーカーにクリックイベントを追加
+          markerEvent(i);
+        }
+
+        // サイドバーへの書き出し
+        document.getElementById("sidebar").innerHTML = 'Googleスプレッドシートデータ<br><br>' + sidebar_html;
+
+      }
+
+      // Function:マーカーにクリックイベントを追加
+      function markerEvent(i) {
+        marker[i].addListener('click', function() {
+          myclick(i);     // Function: 吹き出しのオープン・クローズ
+        });
+      }
+
+      // Function: 吹き出しのオープン・クローズ
+      let openWindow;
+      function myclick(i) {
+        if(openWindow){
+          openWindow.close();
+        }
+        infoWindow[i].open(map, marker[i]);
+        openWindow = infoWindow[i];
+      }
+
+      // 絞り込みボタンが押下されたとき
+      const tagBtn = document.getElementById('getTag');
+      tagBtn.addEventListener('click', function(){
+        const tag = document.getElementById('tag').value;
+
+        const tagmarkerData = [];
+        let j = 0;
+        for (let i = 0; i < markerData.length; i++) {
+          if (tag === markerData[i]['tag'].charAt(0)) {
+            tagmarkerData[j] = markerData[i];
+            j++;
+          }
+          if (tag === '0') {
+            tagmarkerData[i] = markerData[i];
+          }
+        }
+
+        // 地図の初期表示
+        const target = document.getElementById('target');
+        const centerp = {lat: 37.67229496806523, lng: 137.88838989062504};
+
+        map = new google.maps.Map(target, {
+          center: centerp,
+          zoom: 5,
+        });
+
+        // Function:位置とマーカーをセット（タグを絞り込みしたデータ）
+        setData(tagmarkerData);
+
+      });
+
+    </script>
+
+      
+      <script>
+                // Function:地図データの取得
+      function getMapdata(){
+
+        //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
+        const request = new XMLHttpRequest();
+        const bookid = 'スプレッドシートIDを設定';
+        const sheetname = 'スプレッドシートのシート名を設定';
+        const googleapi = 'GOOGLEAPIを設定';
+        const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
+
+        request.open('GET', url, true);
+        request.responseType = 'json';
+
+        request.onload = function () {
+          const data = this.response;     // 取得できた値を格納
+          // 後続処理を記載
+        };
+
+        request.send();
+
+      }
+      </script>
 	  
   </head>
   <body>
@@ -267,27 +355,26 @@
       <div class="options-box">
         <h1>地域包括ケアシステムマップ</h1>
         <div>
-			<span>
-			地域安全マップ</span>
-			<h1>
-			</h1>
-          <input id="show-listings" type="button" value="ピンをオンにする" >
-          <input id="hide-listings" type="button" value="ピンを隠す" >
-			<span>
-			医療、介護マップ</span>
-			<h1>
-			</h1>
 			
-			<input id="show-listings" type="button" value="ピンをオンにする" >
-          <input id="hide-listings" type="button" value="ピンを隠す" >
-            
-          
-				
+			<select id="tag">
+        <option value="0">地域安全マップ</option>
+        <option value="1">医療、介護マップ</option>
+            </select>
+      <button id="getTag">タグの絞込み</button>
+                
+    </div>
+
+    <table>
+      <tr>
+        <td><div id="target"></div></td>
+        <td><div id="sidebar"></div></td>
+      </tr>
+    </table>	
 		
            
           </div>
            </div>
-      </div>
+    
       <div id="map"></div>
 	  
       
