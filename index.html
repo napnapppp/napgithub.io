@@ -148,13 +148,21 @@
 	  </script>
     
         
-     <script>
+    <script>
+         
       let marker = [];
       let infoWindow = [];
       let markerData = [];
-
-      // 地図初期表示
       
+        function initMap()
+        const target-document.getElementById('target');
+        const centerp={ lat: -34.397, lng: 150.644 };
+        
+        map=new google.maps.Map(target,{
+            center:centerp,
+            zoom:18
+        });
+        
 
     function getMapData(){
         const request = new XMLHttpRequest();
