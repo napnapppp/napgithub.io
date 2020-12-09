@@ -156,7 +156,7 @@
       // 地図初期表示
       
 
-        //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
+    function getMapData(){
         const request = new XMLHttpRequest();
         const bookid = 'https://docs.google.com/spreadsheets/d/1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE/edit#gid=0';
         const sheetname = '地域包括ケアシステム';
@@ -167,17 +167,17 @@
         request.responseType = 'json';
 
         request.onload = function () {
-          const data = this.response;     // 取得できた値を格納
-          markerData = parseData(data);   // Function:データ変換
-          setData(markerData);            // Function:位置とマーカーをセット
+          const data = this.response;     
+          markerData = parseData(data);   
+          setData(markerData);            
         };
 
         request.send();
 
-		 
+    }
       
 
-      // Function:データ変換
+    
       function parseData(data) {
         const keys = data.values[0];
         const parsemarkerData = [];
@@ -193,22 +193,22 @@
         return parsemarkerData;
       }
 
-      // Function:位置とマーカーをセット
+      
       function setData(markerData){
 
-        // 初期化
+        
         let sidebar_html = "";
         marker = [];
 
         for (let i = 0; i < markerData.length; i++) {
 
-          // マーカー位置のセット
+          
           const markerLatLng = new google.maps.LatLng({
             lat: Number(markerData[i]['lat']),
             lng: Number(markerData[i]['lng'])
           });
 
-          // マーカーアイコンのセット
+          
           const tagno = markerData[i]['tag'].charAt(0)
           switch (tagno) {
             case '1':
@@ -237,7 +237,7 @@
           }
           const icon = new google.maps.MarkerImage(iconcolor);
 
-          // マーカーのセット
+          
           marker[i] = new google.maps.Marker({
             position: markerLatLng,          // マーカーを立てる位置を指定
             map: map,                        // マーカーを立てる地図を指定
