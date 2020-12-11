@@ -151,8 +151,11 @@
     <script>
          
       let marker = [];
-      
+      let infoWindow=[];
       let markerData = [];
+      
+
+
       
         function initMap(){
         const target=document.getElementById('target');
@@ -217,36 +220,6 @@
             lat: Number(markerData[i]['lat']),
             lng: Number(markerData[i]['lng'])
           });
-
-          
-          const tagno = markerData[i]['tag'].charAt(0)
-          switch (tagno) {
-            case '1':
-              iconcolor = './icon_tag/tag1.png'
-              break;
-            case '2':
-              iconcolor = './icon_tag/tag2.png'
-              break;
-            case '3':
-              iconcolor = './icon_tag/tag3.png'
-              break;
-            case '4':
-              iconcolor = './icon_tag/tag4.png'
-              break;
-            case '5':
-              iconcolor = './icon_tag/tag5.png'
-              break;
-            case '6':
-              iconcolor = './icon_tag/tag6.png'
-              break;
-            case '7':
-              iconcolor = './icon_tag/tag7.png'
-              break;
-            default:
-              iconcolor = './icon_tag/tag7.png'
-          }
-          const icon = new google.maps.MarkerImage(iconcolor);
-
           
           marker[i] = new google.maps.Marker({
             position: markerLatLng,          
