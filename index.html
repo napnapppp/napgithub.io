@@ -97,7 +97,7 @@
 
       function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: -34.397, lng: 150.644 },
+          center: {lat: 37.67229496806523, lng: 137.88838989062504},
           zoom: 18,
         });
 		  
@@ -156,7 +156,7 @@
       
         function initMap(){
         const target=document.getElementById('target');
-        const centerp={ lat: -34.397, lng: 150.644 };
+        const centerp={lat: 37.67229496806523, lng: 137.88838989062504};
         
         map=new google.maps.Map(target,{
             center:centerp,
@@ -340,9 +340,9 @@
 
         
         const request = new XMLHttpRequest();
-        const bookid = 'スプレッドシートIDを設定';
-        const sheetname = 'スプレッドシートのシート名を設定';
-        const googleapi = 'GOOGLEAPIを設定';
+        const bookid = 'https://docs.google.com/spreadsheets/d/1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE/edit#gid=0';
+        const sheetname = '地域包括ケアシステム';
+        const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
         const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
 
         request.open('GET', url, true);
