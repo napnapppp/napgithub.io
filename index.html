@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    
-  </head>
-
-  <body>
-    <title>Geolocation</title>
+      <title>Geolocation</title>
     
     <style type="text/css">
       
@@ -87,42 +83,13 @@
         background: #ebebeb;
       }
     </style>
-	  
-	 
-	  
-     <div class="container">
-      <div class="options-box">
-        <h1>地域包括ケアシステムマップ</h1>
-        <div>
-			
-			<select id="tag">
-        <option value="0">地域安全マップ</option>
-        <option value="1">医療、介護マップ</option>
-            </select>
-      <button id="getTag">タグの絞込み</button>
-                
-    </div>
-
-    <table>
-      <tr>
-        <td><div id="target"></div></td>
-        <td><div id="sidebar"></div></td>
-      </tr>
-    </table>	
-		
-           
-          </div>
-           </div>
-    
-      <div id="map"></div>
-    
-      <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
       <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap&libraries=&v=weekly"
         defer
         ></script>
         
-      <script>
+	   <script>
         
         let map, infoWindow;
       
@@ -366,6 +333,40 @@
   
         }
         </script>
+	 
+  </head>
+
+  <body>
+  
+	  
+     <div class="container">
+      <div class="options-box">
+        <h1>地域包括ケアシステムマップ</h1>
+        <div>
+			
+			<select id="tag">
+        <option value="0">地域安全マップ</option>
+        <option value="1">医療、介護マップ</option>
+            </select>
+      <button id="getTag">タグの絞込み</button>
+                
+    </div>
+
+    <table>
+      <tr>
+        <td><div id="target"></div></td>
+        <td><div id="sidebar"></div></td>
+      </tr>
+    </table>	
+		
+           
+          </div>
+           </div>
+    
+      <div id="map"></div>
+    
+      
+     
       
   </body>
 </html>
