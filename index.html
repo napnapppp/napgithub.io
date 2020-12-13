@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html>
   <head>
       <title>Geolocation</title>
     
@@ -150,22 +150,13 @@
       <script>
            
         let marker = [];
-        
+        let infoWindow=[];
         let markerData = [];
         
   
   
         
-          function initMap(){
-          const target=document.getElementById('target');
-          const centerp={lat: 35.041222, lng: 139.41301};
           
-          map=new google.maps.Map(target,{
-              center:centerp,
-              zoom:18
-          });
-              getMapdata();
-          }
           
   
       function getMapData(){
