@@ -242,12 +242,16 @@
               lat: Number(markerData[i]['lat']),
               lng: Number(markerData[i]['lng'])
             });
-            
+              
+             
             marker[i] = new google.maps.Marker({
               position: markerLatLng,          
               map: map,                        
               icon: icon                       
             });
+              
+              
+              
   
             
             const done = markerData[i]['done'];
@@ -274,7 +278,7 @@
           }
   
          
-          document.getElementById("sidebar").innerHTML = 'Googleスプレッドシートデータ<br><br>' + sidebar_html;
+          document.getElementById("sidebar").innerHTML = 'https://sheets.googleapis.com/v4/spreadsheets/' + sidebar_html;
   
         }
   
