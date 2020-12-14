@@ -317,17 +317,7 @@
           }
   
           
-          const target = document.getElementById('target');
-          const centerp = {lat: 35.041222, lng: 139.41301};
-  
-          map = new google.maps.Map(target, {
-            center: centerp,
-            zoom: 5,
-          });
-  
-          
-          setData(tagmarkerData);
-      
+         
   
         
       });
@@ -337,29 +327,7 @@
       </script>
   
         
-        <script>
-                  
-        function getMapdata(){
-  
-          
-          const request = new XMLHttpRequest();
-          const bookid = 'https://docs.google.com/spreadsheets/d/1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE/edit#gid=0';
-          const sheetname = '地域包括ケアシステム';
-          const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
-          const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
-  
-          request.open('GET', url, true);
-          request.responseType = 'json';
-  
-          request.onload = function () {
-            const data = this.response;    
-            
-          };
-  
-        
-  
-        }
-        </script>
+     
 	 
     
       
