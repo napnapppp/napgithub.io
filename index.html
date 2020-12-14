@@ -193,10 +193,10 @@
   
       function getMapData(){
           const request = new XMLHttpRequest();
-          const bookid = 'https://docs.google.com/spreadsheets/d/1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE/edit#gid=0';
+          const bookid = '1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE';
           const sheetname = '地域包括ケアシステム';
           const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
-          const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
+          const url = 'https://api.sheetson.com/v1/sheets/地域包括ケアシステム?spreadsheetId=1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE' + bookid + '/values/' + sheetname + '?key=' + googleapi;
   
           request.open('GET', url, true);
           request.responseType = 'json';
@@ -278,7 +278,7 @@
           }
   
          
-          document.getElementById("sidebar").innerHTML = 'https://sheets.googleapis.com/v4/spreadsheets/' + sidebar_html;
+          document.getElementById("sidebar").innerHTML = 'https://api.sheetson.com/v1/sheets/地域包括ケアシステム?spreadsheetId=1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE' + sidebar_html;
   
         }
   
