@@ -96,7 +96,7 @@
 
         //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
         const request = new XMLHttpRequest();
-        const bookid = 'Jb2wxby_cTXJGkoVAjKr_hfMXTmpbBJlupjFr7vzU-gpleK0TNW7J8QkWYY';
+        const bookid = '1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE';
         const sheetname = '地域包括ケアシステム';
         const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
         const url = '//api.sheetson.com/v1/sheets/地域包括ケアシステム?spreadsheetId=1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE' + bookid + '/values/' + sheetname + '?key=' + googleapi;
@@ -207,7 +207,7 @@
         }
 
         // サイドバーへの書き出し
-        document.getElementById("sidebar").innerHTML = 'Googleスプレッドシートデータ<br><br>' + sidebar_html;
+        document.getElementById("sidebar").innerHTML = '//api.sheetson.com/v1/sheets/地域包括ケアシステム?spreadsheetId=1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE<br><br>' + sidebar_html;
 
       }
 
