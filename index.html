@@ -182,7 +182,7 @@
 	   <script>
            
         let marker = [];
-    
+        let infoWindow=[];
         let markerData = [];
         
   
@@ -243,13 +243,17 @@
               lng: Number(markerData[i]['lng'])
             });
               
+              const tagno=markerdate[i]['tag'].charAt(0)
+              switch(tagno){
+                      case'1':
+                      iconcolor
+              }
              
             marker[i] = new google.maps.Marker({
               position: markerLatLng,          
               map: map,                        
-              icon: icon                       
+              icon: icon
             });
-              
               
               
   
