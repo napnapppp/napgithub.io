@@ -182,7 +182,6 @@
 	   <script>
            
         let marker = [];
-        let infoWindow=[];
         let markerData = [];
         
   
@@ -203,7 +202,8 @@
   
           request.onload = function () {
             const data = this.response;     
-            markerData = parseData(data);   
+            markerData = parseData(data);
+            infoWindow.setContent("request.onload");
             setData(markerData);            
           };
   
