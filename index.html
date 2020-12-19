@@ -108,6 +108,7 @@
           const data = this.response;     // 取得できた値を格納
           markerData = parseData(data);   // Function:データ変換
           setData(markerData);            // Function:位置とマーカーをセット
+			console.log(markerData);
         };
 
         request.send();
