@@ -81,20 +81,44 @@
       let markerData = [];
 
       // 地図初期表示
-      function initMap() {
-
-        const target = document.getElementById('target');
-        const centerp = {lat: 37.67229496806523, lng: 137.88838989062504};
-
-        map = new google.maps.Map(target, {
-          center: centerp,
-          zoom: 5,
-        });
-
-        // Function:地図データの取得
-        getMapdata();
-
-      }
+       function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: {lat: 35.041222, lng: 139.41301},
+            zoom: 18,
+          });
+        
+      
+          infoWindow = new google.maps.InfoWindow();
+          const locationButton = document.createElement("button");
+          locationButton.textContent = "現在地を探す";
+          locationButton.classList.add("custom-map-control-button");
+          map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+            locationButton
+          );
+          locationButton.addEventListener("click", () => {
+           
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                  };
+                  infoWindow.setPosition(pos);
+                  infoWindow.setContent("現在地");
+                  infoWindow.open(map);
+                  map.setCenter(pos);
+                },
+                () => {
+                  handleLocationError(true, infoWindow, map.getCenter());
+                }
+              );
+            } else {
+              
+              handleLocationError(false, infoWindow, map.getCenter());
+            }
+          });
+        }
 
       // Function:地図データの取得
       function getMapdata(){
@@ -277,52 +301,6 @@
 
     </script>
 
-      <script>
-        
-        let map;
-      
-  
-        function initMap() {
-          map = new google.maps.Map(document.getElementById("map"), {
-            center: {lat: 35.041222, lng: 139.41301},
-            zoom: 18,
-          });
-        
-      
-          infoWindow = new google.maps.InfoWindow();
-          const locationButton = document.createElement("button");
-          locationButton.textContent = "現在地を探す";
-          locationButton.classList.add("custom-map-control-button");
-          map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-            locationButton
-          );
-          locationButton.addEventListener("click", () => {
-           
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                  };
-                  infoWindow.setPosition(pos);
-                  infoWindow.setContent("現在地");
-                  infoWindow.open(map);
-                  map.setCenter(pos);
-                },
-                () => {
-                  handleLocationError(true, infoWindow, map.getCenter());
-                }
-              );
-            } else {
-              
-              handleLocationError(false, infoWindow, map.getCenter());
-            }
-          });
-        }
-  
-       
-         
-      </script>
+    
   </body>
 </html>
