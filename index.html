@@ -289,8 +289,8 @@
         if(openWindow){
           openWindow.close();
         }
-        infoWindow[i].open(map, marker[i]);
-        openWindow = infoWindow[i];
+        open(map, marker[i]);
+        openWindow ;
       }
 
       // 絞り込みボタンが押下されたとき
