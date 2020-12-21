@@ -70,8 +70,6 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
 
-      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR6YIJ8xfZpUyt6eTpxfW6QgJKuP6gqZbD-8RZOn_Kpn5OonHqynfrpcZ7j-EVHwgRBmzFdU0KfIHU4/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
-      
     <script>
       let marker = [];
       let infoWindow = [];
@@ -119,7 +117,7 @@
 
       // Function:データ変換
       function parseData(data) {
-        const keys = data.values;
+        const keys = data.values[0];
         const parsemarkerData = [];
         data.values.forEach(function(value, i) {
           if (i > 0) {
@@ -149,7 +147,7 @@
           });
 
           // マーカーアイコンのセット
-          const tagno = markerData[i]['tag']
+          const tagno = markerData[i]['tag'].charAt(0)
           switch (tagno) {
             case '1':
               iconcolor = './icon_tag/tag1.png'
