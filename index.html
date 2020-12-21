@@ -1,47 +1,94 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
   <head>
-    <title>Google Maps My List</title>
-    <meta charset="utf-8">
-    <style>
-      #header {
-        font-family: Meriyo UI;
-        font-size: 14px;
-          color: white;
-        font-weight: bold;
-          background-color: darkblue;
-          padding: 3px;
-                width: 1750px;
-        border: 1px outset gray;
+      <title>Geolocation</title>
+    
+    <style type="text/css">
+      
+      #map {
+          bottom: 0px;
+        height: 100%;
+          left: 300px;
+          position: absolute;
+          right: 0px;
       }
-      #target {
-        border: 1px outset gray;
-        width: 1400px;
-        height: 900px;
+
+      
+      html,
+      body {
+        font-family: Arial,sans-serif;
+        height: 100%;
+        margin: 0;
+        padding: 0;
       }
-      #sidebar {
-        border: 1px solid #666;
-        padding: 6px;
-        background-color: white;
-        font-family: Meriyo UI;
-        font-size: 12px;
-        overflow: auto;
-        width: 337px;
-        height: 888px;
+
+        .container{
+            height: 50%;
+            width: 25%;
+            position: relative;
+        }
+        input{
+            font-size: 12px;
+            
+        }
+        h1{
+            color: black;
+            font-size: 22px;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        #hide-listings,
+        #show-listings{
+            width: 48%;
+        }
+        hr{
+            background: #DOD7d9；
+            height:1px;
+            margin: 20px 0 20px 0;
+            border: none;
+        }
+        
+        .option-box{
+            background: #fff;
+            border: 1px solid #999;
+            border-radius: 3px;
+            height: 100%;
+            line-height: 35px;
+            padding: 10px 10px 39px 10px;
+            text-align: left;
+            width: 340px;
+            
+        }
+        #pano{
+            width: 200px;
+            height: 200px
+        }
+        .text{
+            font-size: 12px;
+        }
+      .custom-map-control-button {
+        appearance: button;
+        background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        margin: 10px;
+        padding: 0 0.5em;
+        height: 40px;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
       }
-      #tag {
-        font-size: 16px;
-        height: 30px;
-      }
-      #getTag {
-        font-size: 16px;
-        width: 200px;
-        color: #fff;
-        background: green;
-        border-radius: 5px;
-        height: 30px;
+      .custom-map-control-button:hover {
+        background: #ebebeb;
       }
     </style>
+	  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap&libraries=&v=weekly"
+        defer
+        ></script>
+        
   </head>
 
   <body>
@@ -67,12 +114,68 @@
         <td><div id="sidebar"></div></td>
       </tr>
     </table>
-
-    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
-
+      
+ <script>
+        
+        let map, infoWindow;
+      
+  
+        function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: {lat: 35.041222, lng: 139.41301},
+            zoom: 18,
+          });
+        
+      
+          infoWindow = new google.maps.InfoWindow();
+          const locationButton = document.createElement("button");
+          locationButton.textContent = "現在地を探す";
+          locationButton.classList.add("custom-map-control-button");
+          map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+            locationButton
+          );
+          locationButton.addEventListener("click", () => {
+           
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                  };
+                  infoWindow.setPosition(pos);
+                  infoWindow.setContent("現在地");
+                  infoWindow.open(map);
+                  map.setCenter(pos);
+                },
+                () => {
+                  handleLocationError(true, infoWindow, map.getCenter());
+                }
+              );
+            } else {
+              
+              handleLocationError(false, infoWindow, map.getCenter());
+            }
+          });
+        }
+  
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(
+            browserHasGeolocation
+              ? "Error: 現在地の取得に失敗しました"
+              : "Error: このブラウザはジオロケーションに対応していません"
+          );
+          infoWindow.open(map);
+        }
+        
+         
+      </script>
+      
+  
     <script>
       let marker = [];
-      let infoWindow = [];
+    
       let markerData = [];
 
       // 地図初期表示
