@@ -43,7 +43,37 @@
       }
     </style>
       
-       <script>
+       
+      
+  </head>
+
+  <body>
+    <div id="header">Google Maps - 日本いろいろMY LIST</div>
+    <br>
+    <div>
+      <select id="tag">
+        <option value="0">0.ALL</option>
+        <option value="1">1.世界遺産</option>
+        <option value="2">2.日本三大:七不思議</option>
+        <option value="3">3.滝</option>
+        <option value="4">4.城</option>
+        <option value="5">5.山</option>
+        <option value="6">6.温泉</option>
+        <option value="7">7.xxx</option>
+      </select>
+      <button id="getTag">タグの絞込み</button>
+    </div>
+
+    <table>
+      <tr>
+        <td><div id="target"></div></td>
+        <td><div id="sidebar"></div></td>
+      </tr>
+    </table>
+
+    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
+      
+     <script>
         
         let map, infoWindow;
       
@@ -100,35 +130,6 @@
          
       </script>
       
-  </head>
-
-  <body>
-    <div id="header">Google Maps - 日本いろいろMY LIST</div>
-    <br>
-    <div>
-      <select id="tag">
-        <option value="0">0.ALL</option>
-        <option value="1">1.世界遺産</option>
-        <option value="2">2.日本三大:七不思議</option>
-        <option value="3">3.滝</option>
-        <option value="4">4.城</option>
-        <option value="5">5.山</option>
-        <option value="6">6.温泉</option>
-        <option value="7">7.xxx</option>
-      </select>
-      <button id="getTag">タグの絞込み</button>
-    </div>
-
-    <table>
-      <tr>
-        <td><div id="target"></div></td>
-        <td><div id="sidebar"></div></td>
-      </tr>
-    </table>
-
-    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
-      
-     
     <script>
       let marker = [];
    
