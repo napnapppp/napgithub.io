@@ -7,11 +7,11 @@
       #header {
         font-family: Meriyo UI;
         font-size: 14px;
-          color: white;
+    	  color: white;
         font-weight: bold;
-          background-color: darkblue;
-          padding: 3px;
-                width: 1750px;
+    	  background-color: darkblue;
+    	  padding: 3px;
+				width: 1750px;
         border: 1px outset gray;
       }
       #target {
@@ -42,24 +42,23 @@
         height: 30px;
       }
     </style>
-      
-       
-      
   </head>
 
+  <!- ここはタグによる絞り込みのリスト ->
+  <!- optionのvalueは使っていそうで使っていない．各タグ名の最初の数字を絞り込みに利用している ->
   <body>
-    <div id="header">Google Maps - 日本いろいろMY LIST</div>
+    <div id="header">Google MapsとSpreadsheet連携デモ 2020/12/21 Y. Yamauchi</div>
     <br>
     <div>
       <select id="tag">
         <option value="0">0.ALL</option>
-        <option value="1">1.世界遺産</option>
-        <option value="2">2.日本三大:七不思議</option>
+        <option value="1">1.地域包括支援システム1</option>
+        <option value="2">2.地域包括支援システム2</option>
         <option value="3">3.滝</option>
         <option value="4">4.城</option>
         <option value="5">5.山</option>
         <option value="6">6.温泉</option>
-        <option value="7">7.xxx</option>
+        <option value="7">7.国立公園</option>
       </select>
       <button id="getTag">タグの絞込み</button>
     </div>
@@ -71,75 +70,40 @@
       </tr>
     </table>
 
+<!- アカウントtoyo.yamlab@gmail.comのAPIキー ->
     <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
-     
-      
+
     <script>
       let marker = [];
+      let infoWindow = [];
       let markerData = [];
-      let map=[];
-      let infoWindow=[];
-      
-  
-        function initMap() {
-          map = new google.maps.Map(document.getElementById("map"), {
-            center: {lat: 35.041222, lng: 139.41301},
-            zoom: 18,
-          });
-        
-      
-          infoWindow = new google.maps.InfoWindow();
-          const locationButton = document.createElement("button");
-          locationButton.textContent = "現在地を探す";
-          locationButton.classList.add("custom-map-control-button");
-          map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-            locationButton
-          );
-          locationButton.addEventListener("click", () => {
-           
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                  };
-                  infoWindow.setPosition(pos);
-                  infoWindow.setContent("現在地");
-                  infoWindow.open(map);
-                  map.setCenter(pos);
-                },
-                () => {
-                  handleLocationError(true, infoWindow, map.getCenter());
-                }
-              );
-            } else {
-              
-              handleLocationError(false, infoWindow, map.getCenter());
-            }
-          });
-        }
-  
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-          infoWindow.setPosition(pos);
-          infoWindow.setContent(
-            browserHasGeolocation
-              ? "Error: 現在地の取得に失敗しました"
-              : "Error: このブラウザはジオロケーションに対応していません"
-          );
-          infoWindow.open(map);
-        }
-        
-         
+
+      // 地図初期表示
+      function initMap() {
+
+        const target = document.getElementById('target');
+        const centerp = {lat: 37.67229496806523, lng: 137.88838989062504};
+
+        map = new google.maps.Map(target, {
+          center: centerp,
+          zoom: 5,
+        });
+
+        // Function:地図データの取得
+        getMapdata();
+
+      }
 
       // Function:地図データの取得
       function getMapdata(){
 
         //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
         const request = new XMLHttpRequest();
-        const bookid = '1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE';
-        const sheetname = 'list1';
-        const googleapi='AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
+//        const bookid = '1g_tyf97anRd8ci1I9UwOICOm2R_oqP3OmfRrLJ2HnIM';
+        const bookid = '1ekGYUG98zuZqVdJUgHGdp1O_q_ozf--U2jxZROWhZIs'; // Googleフォームから書き込むスプレッドシートのID
+        const sheetname = 'フォームの回答 1'; // Googleフォームで作成されるフォーム名
+//        const googleapi = 'AIzaSyCR0ghzj18Kz4135gTOX77Ui2_7LJQKWYY';
+        const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
         const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
 
         request.open('GET', url, true);
@@ -147,9 +111,10 @@
 
         request.onload = function () {
           const data = this.response;     // 取得できた値を格納
+          console.log(data);
           markerData = parseData(data);   // Function:データ変換
+          console.log(markerData);
           setData(markerData);            // Function:位置とマーカーをセット
-			
         };
 
         request.send();
@@ -186,75 +151,76 @@
             lat: Number(markerData[i]['lat']),
             lng: Number(markerData[i]['lng'])
           });
-
+// タグでマーカを変えることは省略(やれば簡単)
+/*
           // マーカーアイコンのセット
           const tagno = markerData[i]['tag'].charAt(0)
           switch (tagno) {
             case '1':
-              iconcolor = './icon_tagtag7.png'
-
+              iconcolor = './icon_tag/tag1.png'
               break;
             case '2':
-              iconcolor = './icon_tagtag7.png'
-                  
+              iconcolor = './icon_tag/tag2.png'
               break;
             case '3':
-              iconcolor = './icon_tagtag7.png'
-
+              iconcolor = './icon_tag/tag3.png'
               break;
             case '4':
-              iconcolor = './icon_tagtag7.png'
-
+              iconcolor = './icon_tag/tag4.png'
               break;
             case '5':
-              iconcolor = './icon_tagtag7.png'
+              iconcolor = './icon_tag/tag5.png'
               break;
             case '6':
-              iconcolor = './icon_tagtag7.png'
+              iconcolor = './icon_tag/tag6.png'
               break;
             case '7':
-              iconcolor = './icon_tagtag7.png'
+              iconcolor = './icon_tag/tag7.png'
               break;
             default:
-              iconcolor = './icon_tagtag7.png';
-                  
+              iconcolor = './icon_tag/tag7.png'
           }
           const icon = new google.maps.MarkerImage(iconcolor);
-
+*/
           // マーカーのセット
           marker[i] = new google.maps.Marker({
             position: markerLatLng,          // マーカーを立てる位置を指定
-            map: map,                        // マーカーを立てる地図を指定
-            icon: icon                       // アイコン指定
+            map: map                        // マーカーを立てる地図を指定
+            // icon: icon                       // アイコン指定
           });
 
           // 吹き出しへのデータセット
-          const done = markerData[i]['done'];
+          // オリジナルにおいては，画像がある場合(doneがy)，画像を表示するようになっていたが，その関係はコメントアウトした．
+
+//          const done = markerData[i]['done'];
           const tag = markerData[i]['tag'];
           const name = markerData[i]['name'];
-          const img = markerData[i]['img'];
+          const timestamp = markerData[i]['タイムスタンプ'];
+//          const img = markerData[i]['img'];
 
           let setHtml;
-          if (done === 'y'){
-            setHtml = tag + '<br><br>' + name + '<br><img src=' + img + ' width="200" height="150"><br>';
-          } else {
+//          if (done === 'y'){
+//            setHtml = tag + '<br><br>' + name + '<br><img src=' + img + ' width="200" height="150"><br>';
+//          } else {
             setHtml = tag + '<br><br>' + name + '<br><br>';
-          }
+//          }
 
           // 吹き出しのセット
-         
-                new google.maps.InfoWindow({content: setHtml});
-        
+          infoWindow[i] = new google.maps.InfoWindow({
+            content: setHtml
+          });
 
           // サイドバーのデータセット
-          sidebar_html += '<a href="javascript:myclick(' + i + ')">' + tag + ' : ' + name + '(' + done + ')' + '</a><br>';
+          // ここには，フォームで入力した日時も表示するようにした
+//          sidebar_html += '<a href="javascript:myclick(' + i + ')">' + tag + ' : ' + name + '(' + done + ')' + '</a><br>';
+          sidebar_html += '<a href="javascript:myclick(' + i + ')">' + tag + ' : ' + name + '(' + timestamp + ')' + '</a><br>';
 
           // Function:マーカーにクリックイベントを追加
           markerEvent(i);
         }
 
         // サイドバーへの書き出し
-        document.getElementById("sidebar").innerHTML = '<br><br>' + sidebar_html;
+        document.getElementById("sidebar").innerHTML = 'Googleスプレッドシートデータ<br><br>' + sidebar_html;
 
       }
 
@@ -271,11 +237,12 @@
         if(openWindow){
           openWindow.close();
         }
-        open(map, marker[i]);
-        openWindow;
+        infoWindow[i].open(map, marker[i]);
+        openWindow = infoWindow[i];
       }
 
       // 絞り込みボタンが押下されたとき
+      // タグ名の最初の文字(charAt(0))で照合しているので，スプレッドシートにあるタグ名の頭の数字を消してはいけない
       const tagBtn = document.getElementById('getTag');
       tagBtn.addEventListener('click', function(){
         const tag = document.getElementById('tag').value;
@@ -283,7 +250,7 @@
         const tagmarkerData = [];
         let j = 0;
         for (let i = 0; i < markerData.length; i++) {
-          if (tag === markerData[i]['tag']) {
+          if (tag === markerData[i]['tag'].charAt(0)) {
             tagmarkerData[j] = markerData[i];
             j++;
           }
@@ -310,8 +277,3 @@
 
   </body>
 </html>
-
-
-
-
-
