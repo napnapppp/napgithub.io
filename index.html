@@ -72,11 +72,13 @@
     </table>
 
     <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
+     
       
-     <script>
-        
-        let map,
-         infoWindow=[];
+    <script>
+      let marker = [];
+      let markerData = [];
+      let map=[];
+      let infoWindow=[];
       
   
         function initMap() {
@@ -129,15 +131,6 @@
         }
         
          
-      </script>
-      
-    <script>
-      let marker = [];
-   
-      let markerData = [];
-
-      // 地図初期表示
-      
 
       // Function:地図データの取得
       function getMapdata(){
