@@ -107,7 +107,9 @@
 
         request.onload = function () {
           const data = this.response;     // 取得できた値を格納
+			console.log(data);
           markerData = parseData(data);   // Function:データ変換
+			console.log(markerData);
           setData(markerData);            // Function:位置とマーカーをセット
 			
         };
