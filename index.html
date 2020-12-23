@@ -52,8 +52,8 @@
     <div>
       <select id="tag">
         <option value="0">0.ALL</option>
-        <option value="1">1.地域包括支援システム</option>
-        <option value="2">2.地域包括支援システム</option>
+        <option value="1">1.地域包括支援システム1</option>
+        <option value="2">2.地域包括支援システム2</option>
         <option value="3">3.滝</option>
         <option value="4">4.城</option>
         <option value="5">5.山</option>
@@ -71,12 +71,65 @@
     </table>
 
 <!- アカウントtoyo.yamlab@gmail.comのAPIキー ->
-    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA
-&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyCRE0YUBDEuFWxZkdUu4h-CJua1bH8j9mI&callback=initMap" async defer></script>
 
+	  <script>
+		  let map;
+		  
+	  function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: {lat: 35.041222, lng: 139.41301},
+            zoom: 18,
+          });
+        
+      
+          infoWindow = new google.maps.InfoWindow();
+          const locationButton = document.createElement("button");
+          locationButton.textContent = "現在地を探す";
+          locationButton.classList.add("custom-map-control-button");
+          map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+            locationButton
+          );
+          locationButton.addEventListener("click", () => {
+           
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                  };
+                  infoWindow.setPosition(pos);
+                  infoWindow.setContent("現在地");
+                  infoWindow.open(map);
+                  map.setCenter(pos);
+                },
+                () => {
+                  handleLocationError(true, infoWindow, map.getCenter());
+                }
+              );
+            } else {
+              
+              handleLocationError(false, infoWindow, map.getCenter());
+            }
+          });
+        }
+  
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(
+            browserHasGeolocation
+              ? "Error: 現在地の取得に失敗しました"
+              : "Error: このブラウザはジオロケーションに対応していません"
+          );
+          infoWindow.open(map);
+        }
+        
+         
+	  </script>
     <script>
       let marker = [];
-      let infoWindow = [];
+     
       let markerData = [];
 
       // 地図初期表示
@@ -101,8 +154,8 @@
         //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
         const request = new XMLHttpRequest();
 //        const bookid = '1g_tyf97anRd8ci1I9UwOICOm2R_oqP3OmfRrLJ2HnIM';
-        const bookid = '1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE'; // Googleフォームから書き込むスプレッドシートのID
-        const sheetname = 'フォームの回答 2'; // Googleフォームで作成されるフォーム名
+        const bookid = '1ekGYUG98zuZqVdJUgHGdp1O_q_ozf--U2jxZROWhZIs'; // Googleフォームから書き込むスプレッドシートのID
+        const sheetname = 'フォームの回答 1'; // Googleフォームで作成されるフォーム名
 //        const googleapi = 'AIzaSyCR0ghzj18Kz4135gTOX77Ui2_7LJQKWYY';
         const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
         const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
