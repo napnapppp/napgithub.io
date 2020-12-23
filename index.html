@@ -75,7 +75,6 @@
 
 	  <script>
 		  let map;
-		  
 	  function initMap() {
           map = new google.maps.Map(document.getElementById("map"), {
             center: {lat: 35.041222, lng: 139.41301},
@@ -157,7 +156,7 @@
         const bookid = '1ekGYUG98zuZqVdJUgHGdp1O_q_ozf--U2jxZROWhZIs'; // Googleフォームから書き込むスプレッドシートのID
         const sheetname = 'フォームの回答 1'; // Googleフォームで作成されるフォーム名
 //        const googleapi = 'AIzaSyCR0ghzj18Kz4135gTOX77Ui2_7LJQKWYY';
-        const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
+        const googleapi = 'AIzaSyCRE0YUBDEuFWxZkdUu4h-CJua1bH8j9mI';
         const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
 
         request.open('GET', url, true);
@@ -291,8 +290,8 @@
         if(openWindow){
           openWindow.close();
         }
-        infoWindow[i].open(map, marker[i]);
-        openWindow = infoWindow[i];
+       open(map, marker[i]);
+        openWindow;
       }
 
       // 絞り込みボタンが押下されたとき
