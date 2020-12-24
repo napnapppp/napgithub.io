@@ -86,16 +86,7 @@
           center: centerp,
           zoom: 5,
         });
-		  
-        // Function:地図データの取得
-        getMapdata();
-
-      }
-
-        
-        
-  
-        function initMap() {
+		    function initMap() {
 			
 			map = new google.maps.Map(target, {
           center: centerp={lat: 37.67229496806523, lng: 137.88838989062504},
@@ -144,6 +135,15 @@
           infoWindow.open(map);
         }
 	  
+        // Function:地図データの取得
+        getMapdata();
+
+      }
+
+        
+        
+  
+      
       // Function:地図データの取得
       function getMapdata(){
 
