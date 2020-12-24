@@ -84,7 +84,7 @@
 
         map = new google.maps.Map(target, {
           center: centerp,
-          zoom: 5,
+          {lat: 37.67229496806523, lng: 137.88838989062504};
         });
 		  
         // Function:地図データの取得
@@ -97,7 +97,10 @@
   
         function initMap() {
 			
-         
+         map=new google.maps.Map(document.getElementById("map"),{
+			 center:{lat: 37.67229496806523, lng: 137.88838989062504},
+			 zoom:5,
+		 });
         
       
           infoWindow = new google.maps.InfoWindow();
