@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+	
   <head>
     <title>Google Maps My List</title>
     <meta charset="utf-8">
@@ -94,7 +95,12 @@
         
         
   
-        function initMap() {
+        function initMap(){
+			
+			map=new google.maps.Map(document.getElementById("map"),{
+				center:{lat: 37.67229496806523, lng: 137.88838989062504},
+				 zoom: 5,
+			});
          
         
       
