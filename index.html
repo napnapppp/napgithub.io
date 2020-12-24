@@ -83,11 +83,22 @@
 
         map = new google.maps.Map(target, {
           center: centerp,
-          zoom: 18,
+          zoom: 5,
         });
 		  
-	  function initMap() {
-        infoWindow = new google.maps.InfoWindow();
+        // Function:地図データの取得
+        getMapdata();
+
+      }
+
+        
+        
+  
+        function initMap() {
+         
+        
+      
+          infoWindow = new google.maps.InfoWindow();
           const locationButton = document.createElement("button");
           locationButton.textContent = "現在地を探す";
           locationButton.classList.add("custom-map-control-button");
@@ -128,14 +139,6 @@
           );
           infoWindow.open(map);
         }
-        
-         
-
-        // Function:地図データの取得
-        getMapdata();
-
-      }
-
 		 
       // Function:地図データの取得
       function getMapdata(){
