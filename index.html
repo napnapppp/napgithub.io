@@ -131,12 +131,7 @@
         };
 	  
         // Function:地図データの取得
-       
-
-      }
-		
-      // Function:地図データの取得
-      function getMapdata(){
+       function getMapdata(){
 
         //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
         const request = new XMLHttpRequest();
@@ -160,8 +155,13 @@
 
         request.send();
 
-      }
+      };
 
+
+      }
+		
+      // Function:地図データの取得
+      
       // Function:データ変換
       function parseData(data) {
         const keys = data.values[0];
