@@ -45,10 +45,9 @@
     </style>
   </head>
 
-  <!- ここはタグによる絞り込みのリスト ->
-  <!- optionのvalueは使っていそうで使っていない．各タグ名の最初の数字を絞り込みに利用している ->
+  
   <body>
-    <div id="header">Google MapsとSpreadsheet連携デモ 2020/12/21 Y. Yamauchi</div>
+    <div id="header">地域包括ケアシステムマップ</div>
     <br>
     <div>
       <select id="tag">
@@ -67,7 +66,7 @@
       </tr>
     </table>
 
-<!- アカウントtoyo.yamlab@gmail.comのAPIキー ->
+
     <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
 
 	  
@@ -87,7 +86,7 @@
           center: centerp={lat: 37.67229496806523, lng: 137.88838989062504},
           zoom: 5,
         });
-			
+			//ジオロケーションを用いた現在地の検索
           infoWindow = new google.maps.InfoWindow();
           const locationButton = document.createElement("button");
           locationButton.textContent = "現在地を探す";
@@ -130,9 +129,7 @@
           infoWindow.open(map);
         };
 	  
-        // Function:地図データの取得
-       
-
+     
       }
 		
       // Function:地図データの取得
@@ -140,10 +137,10 @@
 
         //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
         const request = new XMLHttpRequest();
-//        const bookid = '1g_tyf97anRd8ci1I9UwOICOm2R_oqP3OmfRrLJ2HnIM';
+//        
         const bookid = '1u5WUNdNBh6Bz7seBveRa4g625oZmw0n-etC0-8ZzlcE'; // Googleフォームから書き込むスプレッドシートのID
         const sheetname = 'フォームの回答 2'; // Googleフォームで作成されるフォーム名
-//        const googleapi = 'AIzaSyCR0ghzj18Kz4135gTOX77Ui2_7LJQKWYY';
+//        
         const googleapi = 'AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA';
         const url = 'https://sheets.googleapis.com/v4/spreadsheets/' + bookid + '/values/' + sheetname + '?key=' + googleapi;
 
@@ -161,6 +158,7 @@
         request.send();
 
       }
+		getMapdata();
 
       // Function:データ変換
       function parseData(data) {
@@ -192,37 +190,7 @@
             lat: Number(markerData[i]['lat']),
             lng: Number(markerData[i]['lng'])
           });
-// タグでマーカを変えることは省略(やれば簡単)
-/*
-          // マーカーアイコンのセット
-          const tagno = markerData[i]['tag'].charAt(0)
-          switch (tagno) {
-            case '1':
-              iconcolor = './icon_tag/tag1.png'
-              break;
-            case '2':
-              iconcolor = './icon_tag/tag2.png'
-              break;
-            case '3':
-              iconcolor = './icon_tag/tag3.png'
-              break;
-            case '4':
-              iconcolor = './icon_tag/tag4.png'
-              break;
-            case '5':
-              iconcolor = './icon_tag/tag5.png'
-              break;
-            case '6':
-              iconcolor = './icon_tag/tag6.png'
-              break;
-            case '7':
-              iconcolor = './icon_tag/tag7.png'
-              break;
-            default:
-              iconcolor = './icon_tag/tag7.png'
-          }
-          const icon = new google.maps.MarkerImage(iconcolor);
-*/
+
           // マーカーのセット
           marker[i] = new google.maps.Marker({
             position: markerLatLng,          // マーカーを立てる位置を指定
@@ -231,20 +199,16 @@
           });
 
           // 吹き出しへのデータセット
-          // オリジナルにおいては，画像がある場合(doneがy)，画像を表示するようになっていたが，その関係はコメントアウトした．
-
-//          const done = markerData[i]['done'];
+        
           const tag = markerData[i]['tag'];
           const name = markerData[i]['name'];
           const timestamp = markerData[i]['タイムスタンプ'];
-//          const img = markerData[i]['img'];
+//          
 
           let setHtml;
-//          if (done === 'y'){
-//            setHtml = tag + '<br><br>' + name + '<br><img src=' + img + ' width="200" height="150"><br>';
-//          } else {
+//         
             setHtml = tag + '<br><br>' + name + '<br><br>';
-//          }
+//          
 
           // 吹き出しのセット
           infoWindow[i] = new google.maps.InfoWindow({
@@ -252,8 +216,7 @@
           });
 
           // サイドバーのデータセット
-          // ここには，フォームで入力した日時も表示するようにした
-//          sidebar_html += '<a href="javascript:myclick(' + i + ')">' + tag + ' : ' + name + '(' + done + ')' + '</a><br>';
+          
           sidebar_html += '<a href="javascript:myclick(' + i + ')">' + tag + ' : ' + name + '(' + timestamp + ')' + '</a><br>';
 
           // Function:マーカーにクリックイベントを追加
@@ -283,7 +246,7 @@
       }
 
       // 絞り込みボタンが押下されたとき
-      // タグ名の最初の文字(charAt(0))で照合しているので，スプレッドシートにあるタグ名の頭の数字を消してはいけない
+      
       const tagBtn = document.getElementById('getTag');
       tagBtn.addEventListener('click', function(){
         const tag = document.getElementById('tag').value;
