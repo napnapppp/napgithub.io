@@ -78,7 +78,7 @@
       // 地図初期表示
 		function initMap() {
 
-        when(const target = document.getElementById('target');
+        const target = document.getElementById('target');
        
 		   
 			
@@ -129,12 +129,12 @@
           );
           infoWindow.open(map);
         };
-	  )
+	  
      
       
 		
       // Function:地図データの取得
-      done(function getMapdata(){
+      function getMapdata(){
 
         //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
         const request = new XMLHttpRequest();
@@ -160,7 +160,6 @@
 
       };
 		getMapdata();
-			);
 	  }
 
       // Function:データ変換
