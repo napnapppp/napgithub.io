@@ -267,16 +267,15 @@
 
         // 地図の初期表示
         const target = document.getElementById('target');
-        const pos=navigator.geolocation {
-              navigator.geolocation.getCurrentPosition(
+        const pos=navigator.geolocation.getCurrentPosition(
                 (position) => {
                   const pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                   };
 				}
-			  );
-		}
+			  )
+		
 
         map = new google.maps.Map(target, {
           center:pos,
