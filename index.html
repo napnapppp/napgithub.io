@@ -269,11 +269,9 @@
         const target = document.getElementById('target');
         const pos=navigator.geolocation.getCurrentPosition(
                 (position) => {
-                  const pos = {
-                    lat: position.coords.latitude,
+                 	lat: position.coords.latitude,
                     lng: position.coords.longitude,
-                  };
-				}
+				};
 			  )
 		
 
