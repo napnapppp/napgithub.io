@@ -2,7 +2,7 @@
 <html lang="ja">
 	
   <head>
-    <title>Google Maps My List</title>
+    <title>地域包括ケアシステムマップ</title>
     <meta charset="utf-8">
     <style>
       #header {
@@ -76,14 +76,14 @@
       let markerData = [];
 
       // 地図初期表示
-      function initMap() {
+		function initMap() {
 
-        const target = document.getElementById('target');
+        when(const target = document.getElementById('target');
        
 		   
 			
 			map = new google.maps.Map(target, {
-          center: centerp={lat: 37.67229496806523, lng: 137.88838989062504},
+          center: centerp={lat: 35.41222, lng: 139.41301},
           zoom: 18,
         });
 			//ジオロケーションを用いた現在地の検索
@@ -117,6 +117,7 @@
               handleLocationError(false, infoWindow, map.getCenter());
             }
           });
+			
         
   
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -128,12 +129,12 @@
           );
           infoWindow.open(map);
         };
-	  
+	  )
      
       
 		
       // Function:地図データの取得
-      function getMapdata(){
+      done(function getMapdata(){
 
         //APIにてデータを取得して、位置とマーカーをセットするfunctionを呼び出す
         const request = new XMLHttpRequest();
@@ -159,6 +160,7 @@
 
       };
 		getMapdata();
+			);
 	  }
 
       // Function:データ変換
