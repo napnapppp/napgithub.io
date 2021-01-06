@@ -205,7 +205,7 @@
           const tag = markerData[i]['tag'];
           const name = markerData[i]['name'];
           const timestamp = markerData[i]['タイムスタンプ'];
-			const message=markerData[i]['message'];
+		  const message=markerData[i]['message'];
 //         
 
           let setHtml;
@@ -256,7 +256,7 @@
 
         const tagmarkerData = [];
         let j = 0;
-        for (let i = 0; i < markerData.length; i++) {
+        for (let i = 0; i < markerData; i++) {
           if (tag === markerData[i]['tag'].charAt(0)) {
             tagmarkerData[j] = markerData[i];
             j++;
