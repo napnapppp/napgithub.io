@@ -270,6 +270,23 @@
           if (tag === '0') {
             tagmarkerData[i] = markerData[i];
           }
+            if (tag ==='2'){
+                var letters = 'abcdefghijklmnopqrstuvwxz';
+                var number = '0123456789';
+
+                var string = letters + letters.toUpperCase() + numbers;
+
+                var len = 8;
+                var password = '';
+
+                for (var i=0;i<len;i++){
+                password +=string.charAt(Math.floor(Math.random() *string.length));
+    
+                }
+
+                console.log(password);
+
+            }
         }
 
         // 地図の初期表示
