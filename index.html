@@ -273,22 +273,24 @@
             if (tag ==='2'){
                
                 
-                var letters = 'abcdefghijklmnopqrstuvwxz';
-                var number = '0123456789';
-
-                var string = letters + letters.toUpperCase() + number;
-
-                var len = 8;
-                var password = '';
-
-                for (var a=0;a<len;a++){
-                password +=string.charAt(Math.floor(Math.random() *string.length));
-    
-                }
-
-                console.log(password);
-
-            }
+             typeof(()=>{
+                 const pass=("pass");
+                 const enter=("enter");
+                 enter.on("click",()=>{
+                     ajax({
+                         url:pass.val() +".html"
+                     }).then(html=>{
+                         ("body").html(html);
+                     }).catch(()=>{
+                         alert("パスワード認証に失敗しました");
+                     pass.val("")});
+                     
+                 })
+                 pass.on("keydown",e=>{
+                     if(e.keyCode===13)
+                         enter.trigger("click");
+                 });
+             });
         }
 
         // 地図の初期表示
