@@ -56,7 +56,10 @@
         <option value="2">2.地域包括支援システム2</option>
         
       </select>
-      <button id="getTag">タグの絞込み</button>
+        <input id="pass" type="password" ></input>
+      
+        <button id="enter">決定</button>
+        <button id="getTag">タグの絞込み</button>
     </div>
 
     <table>
@@ -65,7 +68,7 @@
         <td><div id="sidebar"></div></td>
       </tr>
     </table>
-
+      
 
     <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDexXnvpRB8rLjKLaHTMv5BiJZDukg5RAA&callback=initMap" async defer></script>
 
@@ -273,7 +276,7 @@
             if (tag ==='2'){
                
                 
-             function(()=>{
+             (()=>{
                  const pass=("pass");
                  const enter=("enter");
                  enter.on("click",()=>{
